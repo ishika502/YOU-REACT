@@ -24,9 +24,7 @@ export default function Textform(props) {
 
   const handleCopy = () => {
     //console.log("copying the above text");
-    var text = document.getElementById("myText");
-    text.select();
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(text);
     document.getSelection().removeAllRanges();
     props.alertFunction("Text has been copied", "Success");
   };
@@ -121,7 +119,7 @@ export default function Textform(props) {
           <li>
             No. of words-{" "}
             {
-              text.split(" ").filter((element) => {
+              text.split(/\s+/).filter((element) => {
                 return element.length !== 0;
               }).length
             }
