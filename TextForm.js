@@ -27,6 +27,7 @@ export default function Textform(props) {
     var text = document.getElementById("myText");
     text.select();
     navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
     props.alertFunction("Text has been copied", "Success");
   };
 
@@ -50,9 +51,13 @@ export default function Textform(props) {
       <div className="container">
         <div className="mb-3">
           <label htmlFor="myText" className="form-label">
-            <h3  style={{
-              color: props.mode === "light" ? "black" : "white",
-            }}>Demo textarea:</h3>
+            <h3
+              style={{
+                color: props.mode === "light" ? "black" : "white",
+              }}
+            >
+              Demo textarea:
+            </h3>
           </label>
           <textarea
             className="form-control"
@@ -63,38 +68,77 @@ export default function Textform(props) {
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleExtraSpaces}>
+        <button
+          className="btn btn-primary  mx-2 my-2"
+          onClick={handleExtraSpaces}
+          disabled={text.length === 0}
+        >
           Remove extra spaces
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleUpClick}>
+        <button
+          className="btn btn-primary  mx-2 my-2"
+          onClick={handleUpClick}
+          disabled={text.length === 0}
+        >
           Uppercase
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleDownClick}>
+        <button
+          className="btn btn-primary  mx-2 my-2"
+          onClick={handleDownClick}
+          disabled={text.length === 0}
+        >
           Lowercase
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleClear}>
+        <button
+          className="btn btn-primary  mx-2 my-2"
+          onClick={handleClear}
+          disabled={text.length === 0}
+        >
           Clear
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleCopy}>
+        <button
+          className="btn btn-primary  mx-2 my-2"
+          onClick={handleCopy}
+          disabled={text.length === 0}
+        >
           Copy
         </button>
       </div>
 
       <div className="container my-5">
-        <h5 style={{
-              color: props.mode === "light" ? "black" : "white",
-            }}>Text summary:</h5>
-        <ul style={{
-              color: props.mode === "light" ? "black" : "white",
-            }}>
-          <li>No. of words- {text.split(" ").length}</li>
-          <li>No. of characters- {text.length}</li>
+        <h5
+          style={{
+            color: props.mode === "light" ? "black" : "white",
+          }}
+        >
+          Text summary:
+        </h5>
+        <ul
+          style={{
+            color: props.mode === "light" ? "black" : "white",
+          }}
+        >
           <li>
-            Avg. time taken to read above text- {0.008 * text.split(" ").length}{" "}
+            No. of words-{" "}
+            {
+              text.split(" ").filter((element) => {
+                return element.length !== 0;
+              }).length
+            }
+          </li>
+          <li>No. of characters- {text.replace(/ /g, "").length}</li>
+          <li>
+            Avg. time taken to read above text-{" "}
+            {0.008 *
+              text.split(" ").filter((element) => {
+                return element.length !== 0;
+              }).length}{" "}
             minutes
           </li>
-          <li>Preview- {text.length>0?text:"Type something to preview it here..."}</li>
-
+          <li>
+            Preview-{" "}
+            {text.length > 0 ? text : "Type something to preview it here..."}
+          </li>
         </ul>
       </div>
     </>
